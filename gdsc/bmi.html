@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BMI Calculator</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #2d62c5;
+        background: url('https://cdn.vectorstock.com/i/1000x1000/56/74/bmi-body-mass-index-and-weight-loss-banner-vector-44405674.webp');
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .container {
+        text-align: center;
+        color: #fff;
+        margin-bottom: 20px;
+    }
+    form {
+        max-width: 600px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: rgba(218, 193, 35, 0.9);
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        margin: auto; 
+        opacity: 1.5;
+    }
+    input[type="text"], input[type="number"] {
+        width: 100%;
+        padding: 8px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        box-sizing: border-box;
+    }
+    input[type="submit"] {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 3px;
+        background-color: #333;
+        color: #fff;
+        cursor: pointer;
+    }
+    input[type="submit"]:hover {
+        background-color: #555;
+    }
+    .result {
+        margin-top: 20px;
+        font-weight: bold;
+        padding: 15px;
+        border-radius: 5px;
+    }
+    .result-underweight {
+        background-color: #3498db;
+        color: #fff;
+    }
+    .result-normal {
+        background-color: #2ecc71;
+        color: #fff;
+    }
+    .result-overweight {
+        background-color: #f39c12;
+        color: #fff;
+    }
+    .result-obese {
+        background-color: #e74c3c;
+        color: #fff;
+    }
+</style>
+</head>
+<body>
+
+<form id="bmiForm">
+    <div class="form-group">
+        <label for="height">Height (cm):</label>
+        <input type="number" class="form-control" id="height" name="height" required>
+    </div>
+    <div class="form-group">
+        <label for="weight">Weight (kg):</label>
+        <input type="number" class="form-control" id="weight" name="weight" required>
+    </div>
+    <button type="submit" class="btn btn-primary btn-block">Calculate BMI</button>
+</form>
+
+
+<div id="result" class="result">
+</div>
+<script>
+    
+    document.getElementById('bmiForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        var height = parseFloat(document.getElementById('height').value);
+        var weight = parseFloat(document.getElementById('weight').value);
+        
+        var bmi = weight / ((height / 100) * (height / 100));
+        bmi = bmi.toFixed(2);
+        
+        var result = 'Your BMI is: ' + bmi + '. ';
+        var desired_weight = 0;
+        
+        if (bmi < 18.5) {
+            result += 'You are underweight.';
+            document.getElementById('result').className = 'result result-underweight';
+        } else if (bmi >= 18.5 && bmi < 25) {
+            result += 'You have a normal weight.';
+            document.getElementById('result').className = 'result result-normal';
+        } else if (bmi >= 25 && bmi < 30) {
+            result += 'You are overweight.';
+            document.getElementById('result').className = 'result result-overweight';
+        } else {
+            result += 'You are obese.';
+            document.getElementById('result').className = 'result result-obese';
+        }
+        
+        
+        for (var i = 0; i < 300; i++) {
+            var des = ( i) / ((height / 100) * (height / 100));
+            if (des >= 20 && des <= 23) {
+                desired_weight =  i;
+                break;
+            }
+        }
+        
+       if(bmi<19 || bmi>24)
+        { result += ' Your desired weight for a BMI in the normal range (19-24) is: ' + desired_weight + ' kg.';}
+        
+        document.getElementById('result').innerHTML = result;
+        
+       
+        var anchorTag = document.createElement('a');
+        anchorTag.href = 'difference.html'; 
+        anchorTag.className = 'btn btn-secondary btn-block mt-3';
+        anchorTag.textContent = 'GET YOUR DESIRED WEIGHT HERE';
+        document.getElementById('result').appendChild(anchorTag);
+    });
+
+
+</script>
+
+</body>
+</html>

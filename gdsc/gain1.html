@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Food Calorie Selector</title>
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    font-size: 16px; 
+    background: linear-gradient(to right,rgb(239, 241, 238), rgb(45, 89, 160));
+  }
+  h2 {
+    text-align: center;
+    margin-top: 20px;
+  }
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px; 
+  }
+  #foodChecklist {
+    margin-bottom: 15px;
+  }
+  button {
+    display: block;
+    margin: 0 auto;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  button:hover {
+    background-color: #45a049;
+  }
+  p {
+    margin: 10px auto;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<h2>Food Calorie Selector</h2>
+
+<label for="calories">Enter your calorie gain limit of 1 day:</label>
+<input type="number" id="calories" name="calories" min="0" placeholder="Enter calories" class="form-control">
+
+<fieldset id="foodChecklist">
+  <legend>Choose food items:</legend>
+  <label><input type="checkbox" name="foodItem" value="Apple"> <span style="font-size: 12px;">Apple (52)</span></label><br>
+  <label><input type="checkbox" name="foodItem" value="Banana"> <span style="font-size: 12px;">Banana (89)</span></label><br>
+  <label><input type="checkbox" name="foodItem" value="Broccoli"> <span style="font-size: 12px;">Broccoli (34)</span></label><br>
+  <label><input type="checkbox" name="foodItem" value="Carrot"> <span style="font-size: 12px;">Carrot (41)</span></label><br>
+  <label><input type="checkbox" name="foodItem" value="Chicken"> <span style="font-size: 12px;">Chicken (239)</span></label><br>
+  <label><input type="checkbox" name="foodItem" value="Salmon"> <span style="font-size: 12px;">Salmon (208)</span></label><br>
+  <label><input type="checkbox" name="foodItem" value="Pasta"> <span style="font-size: 12px;">Pasta (131)</span></label><br>
+  <label><input type="checkbox" name="foodItem" value="Rice"> <span style="font-size: 12px;">Rice (130)</span></label><br>
+  <label><input type="checkbox" name="foodItem" value="Yogurt"> <span style="font-size: 12px;">Yogurt (59)</span></label><br>
+  <label><input type="checkbox" name="foodItem" value="Eggs"> <span style="font-size: 12px;">Eggs (155)</span></label><br>
+ 
+  <label><input type="checkbox" name="foodItem" value="Spinach"> <span style="font-size: 12px;">Spinach (7)</span></label><br>
+  <label><input type="checkbox" name="foodItem" value="Cucumber"> <span style="font-size: 12px;">Cucumber (16)</span></label><br>
+  <label><input type="checkbox" name="foodItem" value="Strawberries"> <span style="font-size: 12px;">Strawberries (32)</span></label><br>
+  <label><input type="checkbox" name="foodItem" value="Lettuce"> <span style="font-size: 12px;">Lettuce (15)</span></label><br>
+  
+  <label><input type="checkbox" name="foodItem" value="Celery"> <span style="font-size: 12px;">Celery (6)</span></label><br>
+  <label><input type="checkbox" name="foodItem" value="Zucchini"> <span style="font-size: 12px;">Zucchini (17)</span></label><br>
+  <label><input type="checkbox" name="foodItem" value="Tomatoes"> <span style="font-size: 12px;">Tomatoes (18)</span></label><br>
+</fieldset>
+
+<button onclick="findFood()" class="btn btn-primary">Find Food</button>
+
+<p id="S"></p>
+<p id="Food"></p>
+<p id="F"></p>
+
+<script>
+function findFood() {
+    var targetCalorieInput = document.getElementById("calories");
+    var targetCalorie = targetCalorieInput.value;
+
+    
+
+    var boxes = document.getElementsByName("foodItem");
+    var selectedFoods = "";
+    var k=0;
+    var calorieValues = {
+        "Apple": 52,
+        "Banana": 89,
+        "Broccoli": 34,
+        "Carrot": 41,
+        "Chicken": 239,
+        "Salmon": 208,
+        "Pasta": 131,
+        "Rice": 130,
+        "Yogurt": 59,
+        "Eggs": 155,
+        "Spinach": 7,
+        "Cucumber": 16,
+        "Strawberries": 32,
+        "Lettuce": 15,
+        "Celery": 6, 
+        "Zucchini": 17, 
+        "Tomatoes": 18 
+    };
+    for (var i = 0; i < boxes.length; i++) {
+        if (boxes[i].checked) {
+            selectedFoods += boxes[i].value + ", ";
+            var calorieValue = calorieValues[boxes[i].value];
+            k+=calorieValue;
+        }
+    }
+
+    
+    selectedFoods = selectedFoods.slice(0, -2);
+
+    document.getElementById("Food").innerHTML = "Target Calorie: " + targetCalorie;
+    document.getElementById("F").innerHTML = "Your Calorie: " + k;
+   if(Math.abs(k-targetCalorie)<=20)
+   {
+    document.getElementById("S").innerHTML="Good diet eat"+selectedFoods;
+   }
+   else if(k<targetCalorie-20)
+   {
+    document.getElementById("S").innerHTML="add some food";
+   }
+   else
+   {
+    document.getElementById("S").innerHTML="remove some food";
+   }
+}
+</script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

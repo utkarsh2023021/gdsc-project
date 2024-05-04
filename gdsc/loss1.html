@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exercise Calorie Burner</title>
+
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    font-size: 16px; 
+    background: linear-gradient(to right,rgb(239, 241, 238), rgb(45, 89, 160));
+  }
+  h2 {
+    text-align: center;
+    margin-top: 20px;
+  }
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px; 
+  }
+  #exerciseChecklist {
+    margin-bottom: 15px;
+  }
+  button {
+    display: block;
+    margin: 0 auto;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  button:hover {
+    background-color: #45a049;
+  }
+  p {
+    margin: 10px auto;
+    text-align: center;
+  }
+  .error {
+    color: red;
+  }
+</style>
+</head>
+<body>
+
+<h2>Exercise Calorie Burner</h2>
+
+<label for="calories">Enter your calorie burn goal in 30 minutes:</label>
+<input type="number" id="calories" name="calories" min="0" placeholder="Enter calories">
+<p id="caloriesError" class="error"></p>
+
+<fieldset id="exerciseChecklist">
+  <legend>Choose exercises:</legend>
+  <label><input type="checkbox" name="exerciseItem" value="Running"> <span style="font-size: 12px;">Running (300)</span></label><br>
+  <label><input type="checkbox" name="exerciseItem" value="Cycling"> <span style="font-size: 12px;">Cycling (200)</span></label><br>
+  <label><input type="checkbox" name="exerciseItem" value="Swimming"> <span style="font-size: 12px;">Swimming (250)</span></label><br>
+  <label><input type="checkbox" name="exerciseItem" value="Jump Rope"> <span style="font-size: 12px;">Jump Rope (400)</span></label><br>
+  <label><input type="checkbox" name="exerciseItem" value="Yoga"> <span style="font-size: 12px;">Yoga (150)</span></label><br>
+  <label><input type="checkbox" name="exerciseItem" value="Jumping Jacks"> <span style="font-size: 12px;">Jumping Jacks (200)</span></label><br>
+  <label><input type="checkbox" name="exerciseItem" value="Push-ups"> <span style="font-size: 12px;">Push-ups (200)</span></label><br>
+  <label><input type="checkbox" name="exerciseItem" value="Squats"> <span style="font-size: 12px;">Squats (250)</span></label><br>
+  <label><input type="checkbox" name="exerciseItem" value="Sit-ups"> <span style="font-size: 12px;">Sit-ups (150)</span></label><br>
+  <label><input type="checkbox" name="exerciseItem" value="Plank"> <span style="font-size: 12px;">Plank (100)</span></label><br>
+</fieldset>
+
+<button class="btn btn-primary" onclick="findExercise()">Find Exercise</button>
+
+<p id="S"></p>
+<p id="Exercise"></p>
+<p id="F"></p>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+function findExercise() {
+    var targetCalorie = document.getElementById("calories").value;
+    var caloriesError = document.getElementById("caloriesError");
+    var boxes = document.getElementsByName("exerciseItem");
+    var selectedExercises = "";
+    var k=0;
+    var calorieBurnValues = {
+        "Running": 300,
+        "Cycling": 200,
+        "Swimming": 250,
+        "Jump Rope": 400,
+        "Yoga": 150,
+        "Jumping Jacks": 200,
+        "Push-ups": 200,
+        "Squats": 250,
+        "Sit-ups": 150,
+        "Plank": 100
+    };
+
+    caloriesError.textContent = "";
+
+   
+    if (targetCalorie === "" || isNaN(targetCalorie) || parseInt(targetCalorie) <= 0) {
+        caloriesError.textContent = "Please enter a valid positive number.";
+        return;
+    }
+
+    for (var i = 0; i < boxes.length; i++) {
+        if (boxes[i].checked) {
+            selectedExercises += boxes[i].value + ", ";
+            var calorieBurnValue = calorieBurnValues[boxes[i].value];
+            k += calorieBurnValue;
+        }
+    }
+
+   
+    selectedExercises = selectedExercises.slice(0, -2);
+
+    document.getElementById("Exercise").innerHTML = "Target Calorie Burn: " + targetCalorie;
+    document.getElementById("F").innerHTML = "Your Calorie Burn: " + k;
+    if(Math.abs(k-targetCalorie)<=100)
+   {
+    document.getElementById("S").innerHTML="Good exercise"+selectedExercises;
+   }
+   else if(k<targetCalorie-100)
+   {
+    document.getElementById("S").innerHTML="add some excercise";
+   }
+   else
+   {
+    document.getElementById("S").innerHTML="remove some excercise";
+   }
+}
+</script>
+
+</body>
+</html>
